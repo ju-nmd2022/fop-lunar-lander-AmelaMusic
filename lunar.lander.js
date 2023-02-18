@@ -94,7 +94,10 @@ function resultWinScreen() {
 }
 
 function resultCrashScreen() {
-  background(255, 255, 255);
+  // background(255, 255, 255);
+  textSize(32);
+  fill(255, 0, 255);
+  text("You Crashed!", 350, 100);
 }
 
 function draw() {
@@ -108,7 +111,7 @@ function draw() {
     velocity = velocity + acceleration;
   }
 
-  if (keyIsDown(40)) {
+  if (keyIsDown(40) && isGameActive) {
     velocity = velocity - 0.7;
   }
 
