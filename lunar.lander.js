@@ -72,25 +72,34 @@ let shipY = 100;
 let velocity = 2;
 let acceleration = 0.2;
 
-// gravitation makes ship fall down
+// gravity makes ship fall down
 
-function draw() {
-  background(0, 0, 0);
-  moon();
-  stars();
-  ship(100, shipY);
-  shipY = shipY + velocity;
-  velocity = velocity + acceleration;
-}
+// function draw() {
+//   background(0, 0, 0);
+//   moon();
+//   stars();
+//   ship(100, shipY);
+//   shipY = shipY + velocity;
+//   velocity = velocity + acceleration;
+// }
 
 let isGameActive = true;
 // acceleration = 0.1;
+
+function tryAgain() {
+  text("Click to try again", 350, 200);
+
+  if (mouseIsPressed) {
+    // draw();
+  }
+}
 
 function resultWinScreen() {
   //background(0,0,0);
   textSize(32);
   fill(0, 102, 153);
   text("you landed!", 350, 100);
+  tryAgain();
 }
 
 function resultCrashScreen() {
@@ -98,6 +107,7 @@ function resultCrashScreen() {
   textSize(32);
   fill(255, 0, 255);
   text("You Crashed!", 350, 100);
+  tryAgain();
 }
 
 function draw() {
