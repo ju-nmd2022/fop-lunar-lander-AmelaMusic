@@ -85,6 +85,18 @@ function draw() {
 
 let isGameActive = true;
 // acceleration = 0.1;
+
+function resultWinScreen() {
+  //background(0,0,0);
+  textSize(32);
+  fill(0, 102, 153);
+  text("you landed!", 350, 100);
+}
+
+function resultCrashScreen() {
+  background(255, 255, 255);
+}
+
 function draw() {
   background(0, 0, 0);
   moon();
@@ -101,8 +113,15 @@ function draw() {
   }
 
   // makes ship stop/land at the moon
-  if (shipY > 590) {
+  if (shipY > 590 && velocity > 3) {
     isGameActive = false;
+    resultCrashScreen();
     // console.log("CRASH!");
+    // console.log(velocity);
+  } else if (shipY > 590 && velocity < 3) {
+    isGameActive = false;
+    resultWinScreen();
+    // console.log("YOU LANDED");
+    // console.log(velocity);
   }
 }
