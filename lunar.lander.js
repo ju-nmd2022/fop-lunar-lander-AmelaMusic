@@ -2,13 +2,7 @@ function setup() {
   createCanvas(750, 750);
 }
 
-// function backGround() {
-//   background(0, 0, 0);
-// }
-
-// backGround();
-
-// white oon with different shades of grey cirkles
+// white moon with different shades of grey cirkles
 function moon() {
   push();
 
@@ -31,8 +25,6 @@ function moon() {
   ellipse(200, 735, 80, 30);
   pop();
 }
-
-// moon();
 
 function stars() {
   push();
@@ -58,8 +50,6 @@ function stars() {
   pop();
 }
 
-// stars();
-
 function ship(x, y) {
   push();
   translate(x, y);
@@ -72,30 +62,13 @@ let shipY = 100;
 let velocity = 2;
 let acceleration = 0.2;
 
-// gravity makes ship fall down
-
-// function draw() {
-//   background(0, 0, 0);
-//   moon();
-//   stars();
-//   ship(100, shipY);
-//   shipY = shipY + velocity;
-//   velocity = velocity + acceleration;
-// }
-
 let isGameActive = true;
-// acceleration = 0.1;
 
 function tryAgain() {
   text("Click to try again", 350, 200);
-
-  if (mouseIsPressed) {
-    // draw();
-  }
 }
 
 function resultWinScreen() {
-  //background(0,0,0);
   textSize(32);
   fill(0, 102, 153);
   text("you landed!", 350, 100);
@@ -103,20 +76,26 @@ function resultWinScreen() {
 }
 
 function resultCrashScreen() {
-  // background(255, 255, 255);
   textSize(32);
   fill(255, 0, 255);
   text("You Crashed!", 350, 100);
   tryAgain();
 }
 
-function draw() {
-  background(0, 0, 0);
-  moon();
-  stars();
-  ship(100, shipY);
+function startScreen() {
+  textSize(32);
+  textAlign(CENTER);
+  fill(255);
+  text("Press the screen to start", width / 2, height / 2);
+}
 
+// gravity makes ship fall down
+function gameScreen() {
   if (isGameActive) {
+    background(0, 0, 0);
+    moon();
+    stars();
+    ship(100, shipY);
     shipY = shipY + velocity;
     velocity = velocity + acceleration;
   }
@@ -124,17 +103,47 @@ function draw() {
   if (keyIsDown(40) && isGameActive) {
     velocity = velocity - 0.7;
   }
-
   // makes ship stop/land at the moon
   if (shipY > 590 && velocity > 3) {
     isGameActive = false;
+    state = "result";
+
     resultCrashScreen();
-    // console.log("CRASH!");
-    // console.log(velocity);
   } else if (shipY > 590 && velocity < 3) {
     isGameActive = false;
+    state = "result";
     resultWinScreen();
-    // console.log("YOU LANDED");
-    // console.log(velocity);
+  }
+}
+
+let state = "start";
+
+function draw() {
+  if (state === "start") {
+    startScreen();
+  }
+
+  if (isGameActive && state === "game") {
+    gameScreen();
+  } else if (isGameActive == false && state === "result") {
+    gameScreen();
+  }
+}
+
+// changes states when screen is clicked with the mouse.
+// Allows you to start and restart the game
+function mouseClicked() {
+  if (state === "start") {
+    state = "game";
+  } else if (state === "game" && isGameActive == false) {
+    state = "result";
+    isGameActive = true;
+    velocity = 2;
+    shipY = 100;
+  } else if (state === "result") {
+    state = "game";
+    isGameActive = true;
+    velocity = 2;
+    shipY = 100;
   }
 }
