@@ -50,14 +50,21 @@ function stars() {
   pop();
 }
 
-function ship(x, y) {
+function ship(x, y, showFlames) {
   push();
   translate(x, y);
   fill(255, 255, 255);
-  rect(250, 0, 20, 60);
+  rect(250, 0, 35, 80);
+
+  if (showFlames) {
+    //yellow flames
+    fill(255, 210, 0);
+    triangle(240, 60, 260, 60, 250, 100);
+  }
+
   pop();
 }
-
+// source: flappy ufo from canvas example
 let shipY = 100;
 let velocity = 2;
 let acceleration = 0.2;
@@ -65,13 +72,13 @@ let acceleration = 0.2;
 let isGameActive = true;
 
 function tryAgain() {
-  text("Click to try again", 350, 200);
+  text("Click the screen to try again", 350, 200);
 }
 
 function resultWinScreen() {
   textSize(32);
   fill(0, 102, 153);
-  text("you landed!", 350, 100);
+  text("Congrats, you landed!", 350, 100);
   tryAgain();
 }
 
@@ -83,6 +90,10 @@ function resultCrashScreen() {
 }
 
 function startScreen() {
+  background(0, 0, 0);
+  moon();
+  stars();
+  ship(100, shipY);
   textSize(32);
   textAlign(CENTER);
   fill(255);
@@ -95,21 +106,26 @@ function gameScreen() {
     background(0, 0, 0);
     moon();
     stars();
-    ship(100, shipY);
+    // ship(100, shipY);
     shipY = shipY + velocity;
     velocity = velocity + acceleration;
   }
 
   if (keyIsDown(40) && isGameActive) {
     velocity = velocity - 0.7;
+    // Show flames when accelerating
+    ship(100, shipY, true);
+  } else {
+    // Otherwise, don't show flames
+    ship(100, shipY, false);
   }
   // makes ship stop/land at the moon
-  if (shipY > 590 && velocity > 3) {
+  if (shipY > 570 && velocity > 3) {
     isGameActive = false;
     state = "result";
 
     resultCrashScreen();
-  } else if (shipY > 590 && velocity < 3) {
+  } else if (shipY > 570 && velocity < 3) {
     isGameActive = false;
     state = "result";
     resultWinScreen();
@@ -130,6 +146,7 @@ function draw() {
   }
 }
 
+// source: switching between different states example from lecture
 // changes states when screen is clicked with the mouse.
 // Allows you to start and restart the game
 function mouseClicked() {
