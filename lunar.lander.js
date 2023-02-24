@@ -50,15 +50,25 @@ function stars() {
   pop();
 }
 
+//line 59,62,65,68 from source:https://www.youtube.com/watch?v=cl5FW_zgY_Q
+let k = 15;
 function ship(x, y, showFlames) {
   push();
   translate(x, y);
-  fill(255, 255, 255);
+  fill(0, 83, 159);
   // rect(250, 0, 35, 80);
-  arc(250, 0 + 35, 50, 40, PI, 0, CHORD);
-
+  arc(250, 35, 50 + k, 40 + k, PI, 0, CHORD);
+  //body
+  // fill(238, 164, 127);
   fill(255, 0, 0);
-  ellipse(250, 0, 30, 80);
+  ellipse(250, 0, 35 + k, 80 + k);
+  //window
+  fill(255);
+  ellipse(250, -12, 10 + k, 10 + k);
+  //front fin
+  fill(0, 83, 159);
+  ellipse(250, 32, +k, 25 + k);
+
   if (showFlames) {
     //yellow flames
     fill(255, 210, 0);
@@ -67,6 +77,33 @@ function ship(x, y, showFlames) {
 
   pop();
 }
+
+// function ship(x, y, showFlames) {
+
+//   push();
+//   translate(x, y);
+//   fill(0, 83, 159);
+//   // rect(250, 0, 35, 80);
+//   arc(250, 35, 40+k, 40+k, PI, 0, CHORD);
+//   //body
+//   fill(238, 164, 127);
+//   ellipse(250, 0, 35+k, 80+k);
+//   //window
+//   fill(255);
+//   ellipse(250, -12, 15+k,15+k);
+//   //front fin
+//   fill(0,83,159);
+//   ellipse(250, 32, 5+k, 25+k);
+
+//   if (showFlames) {
+//     //yellow flames
+//     fill(255, 210, 0);
+//     triangle(240, 60, 260, 60, 250, 100);
+//   }
+
+//   pop();
+// }
+
 // source: flappy ufo from canvas example
 let shipY = 100;
 let velocity = 2;
@@ -126,7 +163,6 @@ function gameScreen() {
   if (shipY > 609 && velocity > 3) {
     isGameActive = false;
     state = "result";
-
     resultCrashScreen();
   } else if (shipY > 609 && velocity < 3) {
     isGameActive = false;
@@ -162,6 +198,7 @@ function mouseClicked() {
     shipY = 100;
   } else if (state === "result") {
     state = "game";
+    //start the game again
     isGameActive = true;
     velocity = 2;
     shipY = 100;
