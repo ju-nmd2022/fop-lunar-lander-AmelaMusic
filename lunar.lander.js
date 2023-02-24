@@ -50,13 +50,24 @@ function stars() {
   pop();
 }
 
-//line 59,62,65,68 from source:https://www.youtube.com/watch?v=cl5FW_zgY_Q
-let k = 15;
+//modified rocket body and flame from source:https://www.youtube.com/watch?v=cl5FW_zgY_Q
+
+let k = 10;
 function ship(x, y, showFlames) {
   push();
   translate(x, y);
+
+  if (showFlames) {
+    //flame
+    noStroke();
+    fill(255, 185, 0);
+    ellipse(250, random(30, 55), 20, 60);
+    fill(255, 255, 0);
+    ellipse(250, random(30, 50), 15, 40);
+  }
+
+  //sidefins
   fill(0, 83, 159);
-  // rect(250, 0, 35, 80);
   arc(250, 35, 50 + k, 40 + k, PI, 0, CHORD);
   //body
   // fill(238, 164, 127);
@@ -69,46 +80,13 @@ function ship(x, y, showFlames) {
   fill(0, 83, 159);
   ellipse(250, 32, +k, 25 + k);
 
-  if (showFlames) {
-    //yellow flames
-    fill(255, 210, 0);
-    triangle(240, 60, 260, 60, 250, 100);
-  }
-
   pop();
 }
-
-// function ship(x, y, showFlames) {
-
-//   push();
-//   translate(x, y);
-//   fill(0, 83, 159);
-//   // rect(250, 0, 35, 80);
-//   arc(250, 35, 40+k, 40+k, PI, 0, CHORD);
-//   //body
-//   fill(238, 164, 127);
-//   ellipse(250, 0, 35+k, 80+k);
-//   //window
-//   fill(255);
-//   ellipse(250, -12, 15+k,15+k);
-//   //front fin
-//   fill(0,83,159);
-//   ellipse(250, 32, 5+k, 25+k);
-
-//   if (showFlames) {
-//     //yellow flames
-//     fill(255, 210, 0);
-//     triangle(240, 60, 260, 60, 250, 100);
-//   }
-
-//   pop();
-// }
 
 // source: flappy ufo from canvas example
 let shipY = 100;
 let velocity = 2;
 let acceleration = 0.2;
-
 let isGameActive = true;
 
 function tryAgain() {
@@ -163,10 +141,12 @@ function gameScreen() {
   if (shipY > 609 && velocity > 3) {
     isGameActive = false;
     state = "result";
+
     resultCrashScreen();
   } else if (shipY > 609 && velocity < 3) {
     isGameActive = false;
     state = "result";
+
     resultWinScreen();
   }
 }
