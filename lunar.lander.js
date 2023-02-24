@@ -57,13 +57,21 @@ function ship(x, y, showFlames) {
   push();
   translate(x, y);
 
-  if (showFlames) {
-    //flame
+  if (showFlames && shipY < 600) {
+    // Flames
     noStroke();
     fill(255, 185, 0);
     ellipse(250, random(30, 55), 20, 60);
     fill(255, 255, 0);
     ellipse(250, random(30, 50), 15, 40);
+  } else if (shipY >= 580 && shipY < 604) {
+    // Smoke
+    // noStroke();
+    // fill(150, 150, 150, 100);
+    // ellipse(250, 60, 30, 10);
+    // ellipse(260, 70, 25, 8);
+    // ellipse(240, 70, 25, 8);
+    // ellipse(250, 80, 20, 5);
   }
 
   //sidefins
@@ -138,12 +146,12 @@ function gameScreen() {
     ship(100, shipY, false);
   }
   // makes ship stop/land at the moon
-  if (shipY > 609 && velocity > 3) {
+  if (shipY > 604 && velocity > 3) {
     isGameActive = false;
     state = "result";
 
     resultCrashScreen();
-  } else if (shipY > 609 && velocity < 3) {
+  } else if (shipY > 604 && velocity < 3) {
     isGameActive = false;
     state = "result";
 
