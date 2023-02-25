@@ -1,5 +1,11 @@
 function setup() {
   createCanvas(750, 750);
+
+  finVelocity = 2;
+  finacceleration = -2;
+  k = 10;
+  hasCrashed = false;
+  windowY = -12;
 }
 
 // white moon with different shades of grey cirkles
@@ -51,7 +57,9 @@ function stars() {
 }
 
 //modified rocket body and flame from source:https://www.youtube.com/watch?v=cl5FW_zgY_Q
-
+let hasCrashed = false;
+let finVelocity = 2;
+finacceleration = -2;
 let k = 10;
 function ship(x, y, showFlames) {
   push();
@@ -61,9 +69,9 @@ function ship(x, y, showFlames) {
     // Flames
     noStroke();
     fill(255, 185, 0);
-    ellipse(250, random(30, 55), 20, 60);
+    ellipse(285, random(30, 55), 20, 60);
     fill(255, 255, 0);
-    ellipse(250, random(30, 50), 15, 40);
+    ellipse(285, random(30, 50), 15, 40);
   } else if (shipY >= 580 && shipY < 604) {
     // Smoke
     // noStroke();
@@ -75,20 +83,69 @@ function ship(x, y, showFlames) {
   }
 
   //sidefins
+  let sidefinY = 35;
+  let sidefinX = 0;
+  if (hasCrashed) {
+    sidefinY = sidefinY + finVelocity;
+    sidefinX = sidefinX - finVelocity;
+    finVelocity = finVelocity + finacceleration;
+  }
   fill(0, 83, 159);
-  arc(250, 35, 50 + k, 40 + k, PI, 0, CHORD);
+  arc(285, sidefinY, 50 + k, 40 + k, PI, 0, CHORD);
+
   //body
-  // fill(238, 164, 127);
-  fill(255, 0, 0);
-  ellipse(250, 0, 35 + k, 80 + k);
+  let bodyY = 0;
+  let bodyX = 0;
+
+  if (hasCrashed) {
+    push();
+    translate(285 + bodyX, bodyY);
+    rotate(radians(-45));
+    fill(255, 0, 0);
+    rect(-30, -25, 30 + k, 50 + k / 2);
+    rect(0, -25, 30 + k, 50 + k / 2);
+    pop();
+    bodyY = bodyY + finVelocity;
+    bodyX = bodyX - finVelocity;
+    finVelocity = finVelocity + finacceleration;
+  } else {
+    // fill(238, 164, 127);
+    fill(255, 0, 0);
+    ellipse(285 + bodyX, bodyY, 35 + k, 80 + k);
+  }
+
   //window
   fill(255);
-  ellipse(250, -12, 10 + k, 10 + k);
+  let windowY = -12;
+  let windowX = 0;
+  if (hasCrashed) {
+    // windowY += -100;
+    windowY = -12;
+    // finVelocity = 2;
+    windowY = windowY + finVelocity;
+    windowX = windowX + finVelocity;
+    finVelocity = finVelocity + finacceleration;
+  }
+  ellipse(285 + windowX, windowY, 10 + k, 10 + k);
+
   //front fin
+  let frontfinX = 0;
+  let frontfinY = 32;
+  if (hasCrashed) {
+    frontfinY = frontfinY + finVelocity;
+    frontfinX = frontfinX - finVelocity;
+    finVelocity = finVelocity + finacceleration;
+
+    // rotate(radians(finVelocity * 2));
+  }
   fill(0, 83, 159);
-  ellipse(250, 32, +k, 25 + k);
+  ellipse(285 + frontfinX, frontfinY, +k, 25 + k);
 
   pop();
+}
+
+function crashShip() {
+  hasCrashed = true;
 }
 
 // source: flappy ufo from canvas example
@@ -129,9 +186,9 @@ function startScreen() {
 // gravity makes ship fall down
 function gameScreen() {
   if (isGameActive) {
-    background(0, 0, 0);
-    moon();
-    stars();
+    // background(0, 0, 0);
+    // moon();
+    // stars();
     // ship(100, shipY);
     shipY = shipY + velocity;
     velocity = velocity + acceleration;
@@ -149,6 +206,7 @@ function gameScreen() {
   if (shipY > 604 && velocity > 3) {
     isGameActive = false;
     state = "result";
+    crashShip();
 
     resultCrashScreen();
   } else if (shipY > 604 && velocity < 3) {
@@ -162,6 +220,9 @@ function gameScreen() {
 let state = "start";
 
 function draw() {
+  background(0);
+  stars();
+  moon();
   if (state === "start") {
     startScreen();
   }
@@ -187,8 +248,11 @@ function mouseClicked() {
   } else if (state === "result") {
     state = "game";
     //start the game again
+    hasCrashed = false;
     isGameActive = true;
     velocity = 2;
+    finVelocity = 2;
+    windowY = -12;
     shipY = 100;
   }
 }
