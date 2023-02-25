@@ -168,10 +168,14 @@ function resultWinScreen() {
 function resultCrashScreen() {
   textSize(32);
   fill(255, 0, 255);
+  textAlign(CENTER);
   text("You Crashed!", 350, 100);
   tryAgain();
 }
 
+//typewriter effect source: https://gist.github.com/mjvo/2dce29799eb75b7ee1a571380f12ef1b
+let message = "Press the screen to start";
+let index = 0;
 function startScreen() {
   background(0, 0, 0);
   moon();
@@ -180,7 +184,13 @@ function startScreen() {
   textSize(32);
   textAlign(CENTER);
   fill(255);
-  text("Press the screen to start", width / 2, height / 2);
+  // text("Press the screen to start", width / 2, height / 2);
+  text(message.substring(0, index), width / 2, height / 2);
+
+  if (index < message.length) {
+    index++;
+    setTimeout(draw, 990);
+  }
 }
 
 // gravity makes ship fall down
