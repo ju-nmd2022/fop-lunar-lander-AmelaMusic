@@ -1,6 +1,6 @@
 function setup() {
   createCanvas(750, 750);
-
+  frameRate(30);
   finVelocity = 2;
   finacceleration = -2;
   k = 10;
