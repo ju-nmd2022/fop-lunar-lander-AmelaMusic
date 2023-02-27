@@ -1,11 +1,16 @@
 function setup() {
-  createCanvas(750, 750);
+  var cnv = createCanvas(windowWidth, windowHeight);
+  cnv.style("display", "block");
   frameRate(30);
   finVelocity = 2;
   finacceleration = -2;
   k = 10;
   hasCrashed = false;
   windowY = -12;
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 // white moon with different shades of grey cirkles
@@ -98,20 +103,33 @@ function ship(x, y, showFlames) {
   let bodyX = 0;
 
   if (hasCrashed) {
-    push();
-    translate(285 + bodyX, bodyY);
-    rotate(radians(-45));
-    fill(255, 0, 0);
-    rect(-30, -25, 30 + k, 50 + k / 2);
-    rect(0, -25, 30 + k, 50 + k / 2);
-    pop();
     bodyY = bodyY + finVelocity;
     bodyX = bodyX - finVelocity;
-    finVelocity = finVelocity + finacceleration;
+    finVelocity = finVelocity + finacceleration + 4;
+    push();
+    translate(bodyX, bodyY);
+    // rotate(radians(-45));
+    fill(255, 0, 0);
+    // source https://www.geeksforgeeks.org/p5-js-arc-function/
+    let firstHalf = arc(
+      285 - 40,
+      bodyY,
+      35 + k,
+      80 + k,
+      0,
+      PI - QUARTER_PI,
+      OPEN
+    );
+    let secondHalf = arc(285, bodyY, 35 + k, 80 + k, 0, PI + QUARTER_PI, OPEN);
+
+    pop();
+    // bodyY = bodyY + finVelocity;
+    // bodyX = bodyX + finVelocity;
+    // finVelocity = finVelocity + finacceleration;
   } else {
     // fill(238, 164, 127);
     fill(255, 0, 0);
-    ellipse(285 + bodyX, bodyY, 35 + k, 80 + k);
+    ellipse(285, bodyY, 35 + k, 80 + k);
   }
 
   //window
