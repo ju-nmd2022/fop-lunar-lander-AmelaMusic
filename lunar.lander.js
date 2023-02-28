@@ -105,23 +105,21 @@ function ship(x, y, showFlames) {
   if (hasCrashed) {
     bodyY = bodyY + finVelocity;
     bodyX = bodyX - finVelocity;
-    finVelocity = finVelocity + finacceleration + 4;
+    finVelocity = finVelocity + finacceleration + 6;
+
     push();
     translate(bodyX, bodyY);
-    // rotate(radians(-45));
     fill(255, 0, 0);
     // source https://www.geeksforgeeks.org/p5-js-arc-function/
-    let firstHalf = arc(
-      285 - 40,
-      bodyY,
-      35 + k,
-      80 + k,
-      0,
-      PI - QUARTER_PI,
-      OPEN
-    );
-    let secondHalf = arc(285, bodyY, 35 + k, 80 + k, 0, PI + QUARTER_PI, OPEN);
+    //forst half of the body
+    arc(285, bodyY, 35 + k, 80 + k, 0, PI - QUARTER_PI, OPEN);
+    pop();
 
+    push();
+    translate(-bodyX, bodyY);
+    fill(255, 0, 0);
+    //fsecond half of the body
+    arc(285, bodyY, 35 + k, 80 + k, 0, PI + QUARTER_PI, OPEN);
     pop();
     // bodyY = bodyY + finVelocity;
     // bodyX = bodyX + finVelocity;
@@ -149,6 +147,7 @@ function ship(x, y, showFlames) {
   //front fin
   let frontfinX = 0;
   let frontfinY = 32;
+
   if (hasCrashed) {
     frontfinY = frontfinY + finVelocity;
     frontfinX = frontfinX - finVelocity;
@@ -158,7 +157,6 @@ function ship(x, y, showFlames) {
   }
   fill(0, 83, 159);
   ellipse(285 + frontfinX, frontfinY, +k, 25 + k);
-
   pop();
 }
 
@@ -235,12 +233,10 @@ function gameScreen() {
     isGameActive = false;
     state = "result";
     crashShip();
-
     resultCrashScreen();
   } else if (shipY > 604 && velocity < 3) {
     isGameActive = false;
     state = "result";
-
     resultWinScreen();
   }
 }
@@ -251,10 +247,10 @@ function draw() {
   background(0);
   stars();
   moon();
+
   if (state === "start") {
     startScreen();
   }
-
   if (isGameActive && state === "game") {
     gameScreen();
   } else if (isGameActive == false && state === "result") {
