@@ -1,16 +1,12 @@
 function setup() {
   createCanvas(750, 750);
   frameRate(30);
-  finVelocity = 2;
+  partVelocity = 2;
   finacceleration = -2;
   k = 10;
   hasCrashed = false;
   windowY = -12;
 }
-
-// function windowResized() {
-//   resizeCanvas(windowWidth, windowHeight);
-// }
 
 // white moon with different shades of grey cirkles
 function moon() {
@@ -62,7 +58,7 @@ function stars() {
 
 //modified rocket body and flame from source:https://www.youtube.com/watch?v=cl5FW_zgY_Q
 let hasCrashed = false;
-let finVelocity = 2;
+let partVelocity = 2;
 finacceleration = -2;
 let k = 10;
 function ship(x, y, showFlames) {
@@ -76,23 +72,15 @@ function ship(x, y, showFlames) {
     ellipse(285, random(30, 55), 20, 60);
     fill(255, 255, 0);
     ellipse(285, random(30, 50), 15, 40);
-  } else if (shipY >= 580 && shipY < 604) {
-    // Smoke
-    // noStroke();
-    // fill(150, 150, 150, 100);
-    // ellipse(250, 60, 30, 10);
-    // ellipse(260, 70, 25, 8);
-    // ellipse(240, 70, 25, 8);
-    // ellipse(250, 80, 20, 5);
   }
 
   //sidefins
   let sidefinY = 35;
   let sidefinX = 0;
   if (hasCrashed) {
-    sidefinY = sidefinY + finVelocity;
-    sidefinX = sidefinX - finVelocity;
-    finVelocity = finVelocity + finacceleration;
+    sidefinY = sidefinY + partVelocity;
+    sidefinX = sidefinX - partVelocity;
+    partVelocity = partVelocity + finacceleration;
   }
   fill(0, 83, 159);
   arc(285, sidefinY, 50 + k, 40 + k, PI, 0, CHORD);
@@ -102,14 +90,15 @@ function ship(x, y, showFlames) {
   let bodyX = 0;
 
   if (hasCrashed) {
-    bodyY = bodyY + finVelocity;
-    bodyX = bodyX - finVelocity;
-    finVelocity = finVelocity + finacceleration + 6;
+    bodyY = bodyY + partVelocity;
+    bodyX = bodyX - partVelocity;
+    partVelocity = partVelocity + finacceleration + 6;
 
     push();
     translate(bodyX, bodyY);
     fill(255, 0, 0);
     // source https://www.geeksforgeeks.org/p5-js-arc-function/
+
     //forst half of the body
     arc(285, bodyY, 35 + k, 80 + k, 0, PI - QUARTER_PI, OPEN);
     pop();
@@ -117,6 +106,7 @@ function ship(x, y, showFlames) {
     push();
     translate(-bodyX, bodyY);
     fill(255, 0, 0);
+
     //fsecond half of the body
     arc(285, bodyY, 35 + k, 80 + k, 0, PI + QUARTER_PI, OPEN);
     pop();
@@ -131,9 +121,9 @@ function ship(x, y, showFlames) {
   let windowX = 0;
   if (hasCrashed) {
     windowY = -12;
-    windowY = windowY + finVelocity;
-    windowX = windowX + finVelocity;
-    finVelocity = finVelocity + finacceleration;
+    windowY = windowY + partVelocity;
+    windowX = windowX + partVelocity;
+    partVelocity = partVelocity + finacceleration;
   }
   ellipse(285 + windowX, windowY, 10 + k, 10 + k);
 
@@ -142,12 +132,11 @@ function ship(x, y, showFlames) {
   let frontfinY = 32;
 
   if (hasCrashed) {
-    frontfinY = frontfinY + finVelocity;
-    frontfinX = frontfinX - finVelocity;
-    finVelocity = finVelocity + finacceleration;
-
-    // rotate(radians(finVelocity * 2));
+    frontfinY = frontfinY + partVelocity;
+    frontfinX = frontfinX - partVelocity;
+    partVelocity = partVelocity + finacceleration;
   }
+
   fill(0, 83, 159);
   ellipse(285 + frontfinX, frontfinY, +k, 25 + k);
   pop();
@@ -265,7 +254,7 @@ function mouseClicked() {
     hasCrashed = false;
     isGameActive = true;
     velocity = 2;
-    finVelocity = 2;
+    partVelocity = 2;
     windowY = -12;
     shipY = 100;
   }
