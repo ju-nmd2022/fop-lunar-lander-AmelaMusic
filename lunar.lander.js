@@ -1,6 +1,5 @@
 function setup() {
-  var cnv = createCanvas(windowWidth, windowHeight);
-  cnv.style("display", "block");
+  createCanvas(750, 750);
   frameRate(30);
   finVelocity = 2;
   finacceleration = -2;
@@ -9,9 +8,9 @@ function setup() {
   windowY = -12;
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-}
+// function windowResized() {
+//   resizeCanvas(windowWidth, windowHeight);
+// }
 
 // white moon with different shades of grey cirkles
 function moon() {
@@ -121,11 +120,7 @@ function ship(x, y, showFlames) {
     //fsecond half of the body
     arc(285, bodyY, 35 + k, 80 + k, 0, PI + QUARTER_PI, OPEN);
     pop();
-    // bodyY = bodyY + finVelocity;
-    // bodyX = bodyX + finVelocity;
-    // finVelocity = finVelocity + finacceleration;
   } else {
-    // fill(238, 164, 127);
     fill(255, 0, 0);
     ellipse(285, bodyY, 35 + k, 80 + k);
   }
@@ -135,9 +130,7 @@ function ship(x, y, showFlames) {
   let windowY = -12;
   let windowX = 0;
   if (hasCrashed) {
-    // windowY += -100;
     windowY = -12;
-    // finVelocity = 2;
     windowY = windowY + finVelocity;
     windowX = windowX + finVelocity;
     finVelocity = finVelocity + finacceleration;
@@ -171,21 +164,23 @@ let acceleration = 0.2;
 let isGameActive = true;
 
 function tryAgain() {
-  text("Click the screen to try again", 350, 200);
+  text("Click the screen to try again", 375, 200);
 }
 
 function resultWinScreen() {
   textSize(32);
-  fill(0, 102, 153);
-  text("Congrats, you landed!", 350, 100);
+  fill(255);
+  text("Congrats, you landed!", 375, 100);
   tryAgain();
 }
 
 function resultCrashScreen() {
+  let message = "You Crashed!";
+  let index = 0;
   textSize(32);
-  fill(255, 0, 255);
+  fill(255);
   textAlign(CENTER);
-  text("You Crashed!", 350, 100);
+  text("You Crashed!", 375, 100);
   tryAgain();
 }
 
@@ -200,8 +195,7 @@ function startScreen() {
   textSize(32);
   textAlign(CENTER);
   fill(255);
-  // text("Press the screen to start", width / 2, height / 2);
-  text(message.substring(0, index), width / 2, height / 2);
+  text(message.substring(0, index), 375, 375);
 
   if (index < message.length) {
     index++;
@@ -212,10 +206,6 @@ function startScreen() {
 // gravity makes ship fall down
 function gameScreen() {
   if (isGameActive) {
-    // background(0, 0, 0);
-    // moon();
-    // stars();
-    // ship(100, shipY);
     shipY = shipY + velocity;
     velocity = velocity + acceleration;
   }
