@@ -155,7 +155,7 @@ let isGameActive = true;
 function resultWinScreen() {
   textSize(32);
   fill(53, 94, 59);
-  // textStyle(BOLD);
+  textStyle(BOLD);
   text(
     "Congrats, you landed!\n\n Click on the screen if you want to play again!",
     375,
@@ -166,7 +166,7 @@ function resultWinScreen() {
 function resultCrashScreen() {
   textSize(32);
   fill(210, 4, 45);
-  // textStyle(BOLD);
+  textStyle(BOLD);
   textAlign(CENTER);
   text("Too fast!\n\nClick on the screen to try again", 375, 100);
 }
