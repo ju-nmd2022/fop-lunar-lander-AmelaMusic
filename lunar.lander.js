@@ -152,29 +152,28 @@ let velocity = 2;
 let acceleration = 0.2;
 let isGameActive = true;
 
-function tryAgain() {
-  text("Click the screen to try again", 375, 200);
-}
-
 function resultWinScreen() {
   textSize(32);
-  fill(255);
-  text("Congrats, you landed!", 375, 100);
-  tryAgain();
+  fill(53, 94, 59);
+  // textStyle(BOLD);
+  text(
+    "Congrats, you landed!\n\n Click on the screen if you want to play again!",
+    375,
+    100
+  );
 }
 
 function resultCrashScreen() {
-  let message = "You Crashed!";
-  let index = 0;
   textSize(32);
-  fill(255);
+  fill(210, 4, 45);
+  // textStyle(BOLD);
   textAlign(CENTER);
-  text("You Crashed!", 375, 100);
-  tryAgain();
+  text("Too fast!\n\nClick on the screen to try again", 375, 100);
 }
 
 //typewriter effect source: https://gist.github.com/mjvo/2dce29799eb75b7ee1a571380f12ef1b
-let message = "Press the screen to start";
+let message =
+  "Click on the screen to start\n\nControll thruster with down-arrow key";
 let index = 0;
 function startScreen() {
   background(0, 0, 0);
@@ -184,7 +183,8 @@ function startScreen() {
   textSize(32);
   textAlign(CENTER);
   fill(255);
-  text(message.substring(0, index), 375, 375);
+  textStyle(BOLD);
+  text(message.substring(0, index), 375, 340);
 
   if (index < message.length) {
     index++;
